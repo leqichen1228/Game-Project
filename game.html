@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+<style>
+
+	body{
+		font-family: "Ayuthaya";
+		color: white;
+		background-color: magenta;
+		margin:0;
+		padding: 0;
+		border:0;
+	}
+	h2{
+		font-size: 8vw;
+		font-weight: bold;
+		margin-top: 6vw;
+		font-family: "Apple Chancery";
+		letter-spacing: 0.5vw;
+	}
+	p{
+		font-size:1.8vw;
+	}
+	#intro{
+		margin-top: 5vw;
+		margin-bottom: 5vw;
+		margin-left:36vw;
+		text-align: left;
+	}
+	#guess{
+		font-size:1.8vw;
+	}
+	#guesses{
+		font-size:1.8vw;
+	}
+	#result{
+		font-size:1.8vw;
+		color:red;
+	}
+	#button_guess{
+		font-size: 1.8vw;
+		background-color: white;
+		color:#00A37C;
+		border-radius: 2vw;
+		letter-spacing: 0.3vw;
+		font-weight: bolder;
+		width:8vw;
+		text-align: center;
+	}
+
+	#italic{
+		font-style: italic;
+	}
+
+	
+	.candyjar{
+		z-index: -1;
+		width:40vw;
+		height: auto;
+		position: absolute;
+		margin-top: 0vw;
+		margin-left: 5vw;
+	}
+
+	.guessing{
+		padding-bottom: 2vw;
+		text-align: left;
+		font-size: 1.8vw;
+		display: inline-block;
+		margin-left: 2.5vw;
+
+	}
+
+	.hinting{
+		font-size: 1.8vw;
+		text-align: left;
+		display: inline-block;
+
+	}
+
+	.inputs{
+		width: 50vw;
+		text-align: center;
+		margin-left:10vw;
+		display:block;
+	}
+
+	input{
+		font-family: "Ayuthaya";
+		font-size:1.8vw;
+		color:#00C394;
+		width:10vw;
+	}
+
+	#bigcandy{
+		position: fixed;
+		text-align: center;
+		width:10vw;
+		height:10vw;
+		left:70vw;
+		top:18vw;
+		animation-name: pop;
+		animation-duration: 0.5s;
+		animation-iteration-count: 1;
+	}
+
+	#specialcandy{
+		position: fixed;
+		text-align: center;
+		width:10vw;
+		height:10vw;
+		left:70vw;
+		top:13vw;
+	}
+
+	#timetable{
+		position: fixed;
+		background-color: white;
+		width:250px;
+		height:160px;
+		right:6vw;
+		top:4vw;
+		border-radius:2vw;
+		font-size:18px;
+		display: block;
+		text-align: center;
+	}
+
+	#countnumber{
+		color:black;
+		top:0;
+		left:0;
+		position:relative;
+		color:#00C394;
+	}
+
+	#you{
+		color:black;
+		top:0;
+		left:0;
+		position:relative;
+		color:#00C394;
+	}
+
+	#times{
+		color:black;
+		top:0%;
+		left:0%;
+		position:relative;
+		color:#00C394;
+	}
+
+	@keyframes pop{
+		0% {opacity:1;}
+		100% {opacity:0;}
+	}
+
+	img{
+		width:22vw;
+		height:auto;
+	}
+
+	@media only screen and (max-width: 1300px){
+		h2{
+			margin-top: 10vw;
+		}
+	}
+
+	@media only screen and (max-width: 1000px){
+		h2{
+			margin-top: 20vw;
+		}
+
+		#bigcandy{
+			top:28vw;
+		}
+
+		#specialcandy{
+			top:23vw;
+		}
+	}
+
+	@media only screen and (max-width: 768px){
+		h2{
+			margin-top: 30vw;
+		}
+
+		#bigcandy{
+			top:38vw;
+		}
+
+		#specialcandy{
+			top:33vw;
+		}
+	}
+
+	@media only screen and (max-width: 500px){
+		h2{
+			margin-top: 50vw;
+		}
+
+		#bigcandy{
+			top:48vw;
+		}
+
+		#specialcandy{
+			top:43vw;
+		}
+	}
+
+
+</style>
+
+
+<script language="JavaScript">
+var js_mult1=3141
+var js_mult2=5821
+var js_m1=100000000
+var js_m2=10000
+var js_iseed=0
+var js_iseed1=0
+var js_iseed2=0
+function random() {
+if (js_iseed == 0) {
+now = new Date()
+js_iseed = now.getHours() + now.getMinutes() * 60 + now.getSeconds() * 3600
+}
+js_iseed1 = js_iseed / js_m2
+js_iseed2 = js_iseed % js_m2
+var tmp = (((js_iseed2 * js_mult1 + js_iseed1 * js_mult2) % js_m2) *
+js_m2 + (js_iseed2 * js_mult2)) % js_m1
+js_iseed = (tmp + 1) % js_m1
+return (Math.floor((js_iseed/js_m1) * 100))
+}
+
+myNumber = random();
+nGuesses = 0
+
+var nGuesses = 0
+
+function GuessNum() {
+var response
+var num = parseInt(document.getElementById("guess").value)
+document.getElementById("guess").value = num
+nGuesses++
+response = ""
+if (num < myNumber)    response = response + "Higher!"
+if (num > myNumber)    response = response + "Lower!"
+if (num == myNumber) {
+response = "Correct!";
+alert ("Congratulations! You are Right! Reload page to start a new game!");
+}
+document.getElementById("result").value=response
+document.getElementById("guess").focus()
+document.getElementById("guess").select()
+return true
+}
+
+
+var counter = 0;
+function IncreaseCounter(){
+	counter = counter + 1;
+
+	// find an element for the counter
+	var table = document.getElementById("countnumber");
+
+	if (counter <= 1){
+		var counts = document.createTextNode(counter);
+		// and append counter to the element
+		table.appendChild(counts);
+	}else{
+		var remove = document.getElementById("countnumber").lastChild;
+		document.getElementById("countnumber").removeChild(remove);
+		var counts = document.createTextNode(counter);
+		table.appendChild(counts);
+	}
+	
+
+	console.log(counter);
+	
+}
+
+
+function CandyJump(){
+	var img = document.createElement("img");
+
+	var num = parseInt(document.getElementById("guess").value)
+	document.getElementById("guess").value = num
+	if (num == myNumber) {
+		//show winning candy
+		img.src = "specialcandy.png";
+		var src = document.getElementById("specialcandy"); // to append to a new location, change the id that we want to append the image to
+		src.appendChild(img);
+
+	}else{
+		// show regular candy
+		img.src = "bigcandy.png";
+		var src = document.getElementById("bigcandy");
+		src.appendChild(img);
+	}
+
+}
+
+
+function DeleteCandyJump(){
+var remove = document.getElementById("bigcandy").lastChild;
+document.getElementById("bigcandy").removeChild(remove);
+}
+
+
+function dosth(){
+	// on click, run these two functions:
+	GuessNum();  // check the number
+	CandyJump(); // change the image
+	IncreaseCounter(); // add to the counts in timetable
+}
+
+
+</script>
+</head>
+
+<body onLoad="document.getElementById('guess').focus();document.getElementById('guess').select()">
+
+<div class="candyjar"><img src="candy.png"></div>
+
+<div id="timetable">
+	<h3 id="you">You've guessed</h3>
+	<h3 id="countnumber"></h3>
+	<h3 id="times">times</h3>
+</div>
+
+<div id="bigcandy"></div>
+
+<div id="specialcandy"></div>
+
+
+<center>
+<h2>Candy Jar</h2>
+
+<div id="intro">
+	<p>How many candies in the jar?</p>
+	<p id="italic">TAKE A GUESS !</p>
+</div>
+
+
+<div class="inputs">
+	<form class="guessing" onSubmit="GuessNum(); return false">
+	Your Guess: <input TYPE="text" id="guess" NAME="guess">
+	<input id="button_guess" TYPE="button" VALUE=" GO " onClick="dosth()" onmouseout="DeleteCandyJump()">
+	</form>
+	<form class="hinting">
+	<center>
+	Hint: <input TYPE="text" id="result" NAME="result">
+	</center>
+	</form>
+</div>
+
+</body>
+
+</html>
